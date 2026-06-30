@@ -788,7 +788,7 @@ export default function App() {
                               R$ {p.amount.toFixed(2)}
                             </td>
                             <td className="px-6 py-4 text-[#4a4a40]">
-                              {p.dueDate.split("-").reverse().join("/")}
+                              {p.dueDate ? p.dueDate.split("-").reverse().join("/") : "---"}
                             </td>
                             <td className="px-6 py-4">
                               <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-[10px] font-bold ${
@@ -1209,7 +1209,7 @@ export default function App() {
                     const titleStr = `${selCondo ? selCondo.name : "Todos os Condomínios"} - Período ${reportMonthFilter}`;
                     
                     const reportPaidPayments = payments.filter(p => p.status === "Pago" && (reportCondoFilter === "all" || p.condoId === reportCondoFilter) && (!reportMonthFilter || p.month === reportMonthFilter));
-                    const reportLaunchedExpenses = expenses.filter(e => e.status === "Lancado" && (reportCondoFilter === "all" || e.condoId === reportCondoFilter) && (!reportMonthFilter || e.dueDate.startsWith(reportMonthFilter)));
+                    const reportLaunchedExpenses = expenses.filter(e => e.status === "Lancado" && (reportCondoFilter === "all" || e.condoId === reportCondoFilter) && (!reportMonthFilter || (e.dueDate && e.dueDate.startsWith(reportMonthFilter))));
                     
                     const reportTotalRev = reportPaidPayments.reduce((acc, curr) => acc + curr.amount, 0);
                     const reportTotalExp = reportLaunchedExpenses.reduce((acc, curr) => acc + curr.amount, 0);
@@ -1261,7 +1261,7 @@ export default function App() {
               {/* Financial Balance Summary Card */}
               {(() => {
                 const reportPaidPayments = payments.filter(p => p.status === "Pago" && (reportCondoFilter === "all" || p.condoId === reportCondoFilter) && (!reportMonthFilter || p.month === reportMonthFilter));
-                const reportLaunchedExpenses = expenses.filter(e => e.status === "Lancado" && (reportCondoFilter === "all" || e.condoId === reportCondoFilter) && (!reportMonthFilter || e.dueDate.startsWith(reportMonthFilter)));
+                const reportLaunchedExpenses = expenses.filter(e => e.status === "Lancado" && (reportCondoFilter === "all" || e.condoId === reportCondoFilter) && (!reportMonthFilter || (e.dueDate && e.dueDate.startsWith(reportMonthFilter))));
                 
                 const reportTotalRev = reportPaidPayments.reduce((acc, curr) => acc + curr.amount, 0);
                 const reportTotalExp = reportLaunchedExpenses.reduce((acc, curr) => acc + curr.amount, 0);
@@ -1338,7 +1338,7 @@ export default function App() {
                                 </div>
                                 <div className="text-right">
                                   <span className="font-semibold text-rose-800 block">R$ {e.amount.toFixed(2)}</span>
-                                  <span className="text-[9px] text-[#8c8c7a]">Vcto: {e.dueDate.split("-").reverse().join("/")}</span>
+                                  <span className="text-[9px] text-[#8c8c7a]">Vcto: {e.dueDate ? e.dueDate.split("-").reverse().join("/") : "---"}</span>
                                 </div>
                               </div>
                             ))}
